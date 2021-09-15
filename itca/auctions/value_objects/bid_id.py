@@ -1,0 +1,1 @@
+BidId = int
