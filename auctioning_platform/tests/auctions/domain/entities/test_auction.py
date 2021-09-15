@@ -1,4 +1,4 @@
-from itca.auctions.entities.auction import Auction
+from itca.auctions.domain.entities.auction import Auction
 from itca.foundation.money import USD, Money
 
 

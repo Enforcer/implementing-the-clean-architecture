@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 
-from itca.auctions.entities.auction import Auction
-from itca.auctions.use_cases.placing_bid import (
+from itca.auctions.domain.entities.auction import Auction
+from itca.auctions.app.use_cases.placing_bid import (
     PlacingBid,
     PlacingBidInputDto,
     PlacingBidOutputBoundary,

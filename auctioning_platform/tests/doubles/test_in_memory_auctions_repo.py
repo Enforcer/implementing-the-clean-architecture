@@ -1,4 +1,4 @@
-from itca.auctions.entities.auction import Auction, Bid
+from itca.auctions.domain.entities.auction import Auction, Bid
 from itca.foundation.money import USD, Money
 from tests.doubles.in_memory_auctions_repo import InMemoryAuctionsRepository
 

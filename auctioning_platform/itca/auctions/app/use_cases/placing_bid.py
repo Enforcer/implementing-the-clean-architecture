@@ -3,9 +3,9 @@ from dataclasses import dataclass
 
 from attr import define
 
-from itca.auctions.repositories.auctions import AuctionsRepository
-from itca.auctions.value_objects.auction_id import AuctionId
-from itca.auctions.value_objects.bidder_id import BidderId
+from itca.auctions.app.repositories.auctions import AuctionsRepository
+from itca.auctions.domain.value_objects.auction_id import AuctionId
+from itca.auctions.domain.value_objects.bidder_id import BidderId
 from itca.foundation.money import Money
 
 

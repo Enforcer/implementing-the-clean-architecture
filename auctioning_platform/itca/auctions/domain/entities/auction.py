@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Optional
 
 from attr import define
 
-from itca.auctions.value_objects.auction_id import AuctionId
-from itca.auctions.value_objects.bid_id import BidId
-from itca.auctions.value_objects.bidder_id import BidderId
+from itca.auctions.domain.value_objects.auction_id import AuctionId
+from itca.auctions.domain.value_objects.bid_id import BidId
+from itca.auctions.domain.value_objects.bidder_id import BidderId
 from itca.foundation.money import Money
 
 

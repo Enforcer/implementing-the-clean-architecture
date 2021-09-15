@@ -1,8 +1,8 @@
 import copy
 
-from itca.auctions.entities.auction import Auction
-from itca.auctions.repositories.auctions import AuctionsRepository
-from itca.auctions.value_objects.auction_id import AuctionId
+from itca.auctions.domain.entities.auction import Auction
+from itca.auctions.app.repositories.auctions import AuctionsRepository
+from itca.auctions.domain.value_objects.auction_id import AuctionId
 
 
 class InMemoryAuctionsRepository(AuctionsRepository):

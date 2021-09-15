@@ -1,7 +1,7 @@
 import abc
 
-from itca.auctions.entities.auction import Auction
-from itca.auctions.value_objects.auction_id import AuctionId
+from itca.auctions.domain.entities.auction import Auction
+from itca.auctions.domain.value_objects.auction_id import AuctionId
 
 
 class AuctionsRepository(abc.ABC):
