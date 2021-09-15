@@ -1,6 +1,8 @@
 import abc
 from dataclasses import dataclass
 
+from attr import define
+
 from itca.auctions.repositories.auctions import AuctionsRepository
 from itca.auctions.value_objects.auction_id import AuctionId
 from itca.auctions.value_objects.bidder_id import BidderId
@@ -26,14 +28,10 @@ class PlacingBidInputDto:
     amount: Money
 
 
+@define
 class PlacingBid:
-    def __init__(
-        self,
-        output_boundary: PlacingBidOutputBoundary,
-        auctions_repo: AuctionsRepository,
-    ) -> None:
-        self._output_boundary = output_boundary
-        self._auctions_repo = auctions_repo
+    _output_boundary: PlacingBidOutputBoundary
+    _auctions_repo: AuctionsRepository
 
     def execute(self, input_dto: PlacingBidInputDto) -> None:
         auction = self._auctions_repo.get(input_dto.auction_id)
