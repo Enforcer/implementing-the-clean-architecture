@@ -6,4 +6,5 @@ __all__ = [
     "Base",
     "metadata",
     "JSONB",
+    "GUID",
 ]

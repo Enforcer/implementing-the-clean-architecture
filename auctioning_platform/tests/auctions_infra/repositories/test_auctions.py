@@ -1,7 +1,9 @@
 from sqlalchemy.orm import Session
 
 from itca.auctions.domain.entities.auction import Auction, Bid
-from itca.auctions_infra.repositories.auctions import SqlAlchemyAuctionsRepository
+from itca.auctions_infra.repositories.auctions import (
+    SqlAlchemyAuctionsRepository,
+)
 from itca.foundation.money import USD, Money
 
 

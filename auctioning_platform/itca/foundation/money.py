@@ -58,7 +58,8 @@ class Money:
     def __lt__(self, other: Any) -> bool:
         if not isinstance(other, Money):
             raise TypeError(
-                f"'<' not supported between instances of 'Money' and '{other.__class__.__name__}'"
+                f"'<' not supported between instances "
+                f"of 'Money' and '{other.__class__.__name__}'"
             )
         elif self.currency != other.currency:
             raise TypeError("Can not compare money in different currencies!")
