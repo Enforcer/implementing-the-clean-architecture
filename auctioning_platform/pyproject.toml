@@ -20,6 +20,7 @@ Flask = "^2.0.1"
 injector = "^0.18.4"
 SQLAlchemy = "^1.4.23"
 Flask-Injector = "^0.13.0"
+cattrs = "^1.8.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
