@@ -10,6 +10,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./auctioning_platform
 
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +23,6 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip poetry
-        cd auctioning_platform
         poetry install
     - name: Run lintes
       run: |
