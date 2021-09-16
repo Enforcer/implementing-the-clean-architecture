@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Optional
 
 from attr import define
@@ -9,7 +8,7 @@ from itca.auctions.domain.value_objects.bidder_id import BidderId
 from itca.foundation.money import Money
 
 
-@dataclass
+@define
 class Bid:
     id: Optional[BidId]
     bidder_id: BidderId

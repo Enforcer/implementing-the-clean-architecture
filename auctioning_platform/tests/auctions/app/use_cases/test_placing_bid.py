@@ -1,12 +1,12 @@
 from unittest.mock import Mock
 
-from itca.auctions.domain.entities.auction import Auction
 from itca.auctions.app.use_cases.placing_bid import (
     PlacingBid,
     PlacingBidInputDto,
     PlacingBidOutputBoundary,
     PlacingBidOutputDto,
 )
+from itca.auctions.domain.entities.auction import Auction
 from itca.foundation.money import USD, Money
 from tests.doubles.in_memory_auctions_repo import InMemoryAuctionsRepository
 

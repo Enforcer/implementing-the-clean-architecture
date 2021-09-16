@@ -1,7 +1,7 @@
 import copy
 
-from itca.auctions.domain.entities.auction import Auction
 from itca.auctions.app.repositories.auctions import AuctionsRepository
+from itca.auctions.domain.entities.auction import Auction
 from itca.auctions.domain.value_objects.auction_id import AuctionId
 
 

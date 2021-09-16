@@ -1,11 +1,19 @@
 import inspect
 from decimal import Decimal, DecimalException
 from functools import total_ordering
-from typing import Any, Type
+from typing import Any, ClassVar, Type
 
 
 class Currency:
     decimal_precision: int
+    __subclasses: ClassVar[dict[str, Type["Currency"]]] = {}
+
+    def __init_subclass__(cls, **kwargs: Any) -> None:
+        cls.__subclasses[cls.__name__] = cls
+
+    @classmethod
+    def from_name(cls, name: str) -> Type["Currency"]:
+        return cls.__subclasses[name]
 
 
 class USD(Currency):
