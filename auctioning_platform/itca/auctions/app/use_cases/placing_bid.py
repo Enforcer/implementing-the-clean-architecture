@@ -1,5 +1,6 @@
 import abc
 from dataclasses import dataclass
+from typing import Any
 
 from attr import define
 
@@ -18,6 +19,10 @@ class PlacingBidOutputDto:
 class PlacingBidOutputBoundary(abc.ABC):
     @abc.abstractmethod
     def present(self, dto: PlacingBidOutputDto) -> None:
+        pass
+
+    @abc.abstractmethod
+    def get_presented_value(self) -> Any:
         pass
 
 

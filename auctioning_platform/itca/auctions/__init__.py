@@ -15,6 +15,7 @@ __all__ = [
     "PlacingBid",
     "PlacingBidInputDto",
     "PlacingBidOutputDto",
+    "PlacingBidOutputBoundary",
 ]
 
 

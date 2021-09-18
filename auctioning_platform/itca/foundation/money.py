@@ -65,3 +65,9 @@ class Money:
             raise TypeError("Can not compare money in different currencies!")
         else:
             return self.amount < other.amount
+
+    def __repr__(self) -> str:
+        return (
+            f"<{self.__class__.__name__}"
+            f"({self.currency.__name__}, '{self.amount}')>"
+        )
