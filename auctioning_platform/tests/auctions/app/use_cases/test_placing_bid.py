@@ -10,12 +10,11 @@ from itca.auctions.app.use_cases.placing_bid import (
     PlacingBidOutputBoundary,
     PlacingBidOutputDto,
 )
-from itca.auctions.domain.entities.auction import Auction
 from itca.auctions.domain.exceptions.bid_on_ended_auction import (
     BidOnEndedAuction,
 )
-from itca.auctions.domain.value_objects.auction_id import AuctionId
 from itca.foundation.money import USD, Money
+from tests.auctions.factories import create_auction
 from tests.doubles.in_memory_auctions_repo import InMemoryAuctionsRepository
 
 
@@ -64,19 +63,3 @@ def test_bidding_on_ended_auction_raises_exception(
 @pytest.fixture()
 def repo() -> AuctionsRepository:
     return InMemoryAuctionsRepository()
-
-
-def create_auction(
-    repo: AuctionsRepository,
-    starting_price: Money = Money(USD, "5.00"),
-    ends_at: datetime = datetime.now() + timedelta(days=3),
-) -> AuctionId:
-    auction_id = 2
-    auction = Auction(
-        id=auction_id,
-        starting_price=starting_price,
-        bids=[],
-        ends_at=ends_at,
-    )
-    repo.save(auction)
-    return auction_id
