@@ -21,5 +21,7 @@ class FinalizingAuction:
     def execute(self, input_dto: FinalizingAuctionInputDto) -> None:
         auction = self._auctions_repo.get(input_dto.auction_id)
         auction.finalize(input_dto.bidder_id)
-        # self._payments. ?
+        self._payments.pay(
+            token=input_dto.payment_token, amount=auction.current_price
+        )
         self._auctions_repo.save(auction)

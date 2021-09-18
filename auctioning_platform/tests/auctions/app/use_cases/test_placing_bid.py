@@ -15,7 +15,6 @@ from itca.auctions.domain.exceptions.bid_on_ended_auction import (
 )
 from itca.foundation.money import USD, Money
 from tests.auctions.factories import create_auction
-from tests.doubles.in_memory_auctions_repo import InMemoryAuctionsRepository
 
 
 def test_presents_winning_and_10_usd_price_when_higher_bid_placed(
@@ -58,8 +57,3 @@ def test_bidding_on_ended_auction_raises_exception(
                 bidder_id=1, auction_id=auction_id, amount=Money(USD, "10")
             )
         )
-
-
-@pytest.fixture()
-def repo() -> AuctionsRepository:
-    return InMemoryAuctionsRepository()
