@@ -1,8 +1,20 @@
 import requests
+from attr import define
 from yarl import URL
 
-from itca.auctions.app.ports.payments import PaymentFailed, Payments
+from itca.auctions.app.ports.payments import CardId, PaymentFailed, Payments
+from itca.auctions.domain.value_objects.bidder_id import BidderId
 from itca.foundation.money import Money
+
+
+@define
+class CardDto:
+    id: CardId
+    last_4_digits: str
+    processing_network: str
+
+
+CustomerId = int
 
 
 class BripePayments(Payments):
@@ -22,3 +34,16 @@ class BripePayments(Payments):
         )
         if not response.ok:
             raise PaymentFailed
+
+    def pay_with_selected_card(
+        self, bidder_id: BidderId, card_id: CardId, amount: Money
+    ) -> None:
+        ...
+
+    def list_of_remembered_cards(
+        self, customer_id: CustomerId
+    ) -> list[CardDto]:
+        ...
+
+    def remember_card(self, token: str) -> None:
+        ...
