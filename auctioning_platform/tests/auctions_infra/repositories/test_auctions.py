@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy.orm import Session
 
 from itca.auctions.domain.entities.auction import Auction, Bid
@@ -19,6 +21,7 @@ def test_should_get_back_saved_auction(session: Session) -> None:
         id=1,
         starting_price=Money(USD, "9.99"),
         bids=bids,
+        ends_at=datetime.now(),
     )
     repo = SqlAlchemyAuctionsRepository(session)
 

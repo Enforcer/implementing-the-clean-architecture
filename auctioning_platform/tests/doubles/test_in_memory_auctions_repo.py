@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from itca.auctions.domain.entities.auction import Auction, Bid
 from itca.foundation.money import USD, Money
 from tests.doubles.in_memory_auctions_repo import InMemoryAuctionsRepository
@@ -15,6 +17,7 @@ def test_should_get_back_saved_auction() -> None:
         id=1,
         starting_price=Money(USD, "9.99"),
         bids=bids,
+        ends_at=datetime.now(),
     )
     repo = InMemoryAuctionsRepository()
 

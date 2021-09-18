@@ -36,6 +36,7 @@ class SqlAlchemyAuctionsRepository(AuctionsRepository):
             AuctionModel(
                 id=auction.id,
                 starting_price=dict_repr["_starting_price"],
+                ends_at=dict_repr["_ends_at"],
             )
         )
         for bid in dict_repr["_bids"]:

@@ -1,4 +1,6 @@
 """Serialization / Deserialization"""
+from datetime import datetime
+
 import cattr
 
 from itca.foundation.money import Currency, Money
@@ -16,4 +18,7 @@ converter.register_structure_hook(
     lambda money_dict, _: Money(
         Currency.from_name(money_dict["currency"]), money_dict["amount"]
     ),
+)
+converter.register_structure_hook(
+    datetime, lambda datetime_raw, _: datetime_raw
 )

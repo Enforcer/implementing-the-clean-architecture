@@ -1,7 +1,11 @@
+from datetime import datetime
 from typing import Optional
 
 from attr import define
 
+from itca.auctions.domain.exceptions.bid_on_ended_auction import (
+    BidOnEndedAuction,
+)
 from itca.auctions.domain.value_objects.auction_id import AuctionId
 from itca.auctions.domain.value_objects.bid_id import BidId
 from itca.auctions.domain.value_objects.bidder_id import BidderId
@@ -20,6 +24,7 @@ class Auction:
     _id: AuctionId
     _starting_price: Money
     _bids: list[Bid]
+    _ends_at: datetime
 
     def __attrs_post_init__(self) -> None:
         self._bids.sort(key=lambda bid: bid.amount)
@@ -29,6 +34,9 @@ class Auction:
         return self._id
 
     def place_bid(self, bidder_id: BidderId, amount: Money) -> None:
+        if datetime.now() > self._ends_at:
+            raise BidOnEndedAuction
+
         if amount > self.current_price:
             new_bid = Bid(
                 id=None,
@@ -53,3 +61,6 @@ class Auction:
     @property
     def _highest_bid(self) -> Bid:
         return self._bids[-1]
+
+    def finalize(self, bidder_id: BidderId) -> None:
+        pass
