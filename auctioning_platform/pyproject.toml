@@ -23,6 +23,9 @@ Flask-Injector = "^0.13.0"
 cattrs = "^1.8.0"
 alembic = "^1.7.3"
 marshmallow = "^3.13.0"
+requests = "^2.26.0"
+yarl = "^1.6.3"
+types-requests = "^2.25.6"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
@@ -30,6 +33,7 @@ mypy = "^0.910"
 pytest = "^6.2.5"
 isort = "^5.9.3"
 flake8 = "^3.9.2"
+vcrpy = "^4.1.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

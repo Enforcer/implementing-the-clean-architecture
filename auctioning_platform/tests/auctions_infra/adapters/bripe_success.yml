@@ -1,0 +1,38 @@
+interactions:
+- request:
+    body: '{"card_token": "IRRELEVANT", "currency": "USD", "amount": 1000}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic dGVzdDp0ZXN0
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '63'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+    method: POST
+    uri: http://localhost:5050/api/v1/charge
+  response:
+    body:
+      string: '{"charge_uuid":"e78bceb6-c59a-4d6b-aebe-c9eeafbce613","success":true}
+
+        '
+    headers:
+      Content-Length:
+      - '70'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 18 Sep 2021 13:42:14 GMT
+      Server:
+      - Werkzeug/2.0.1 Python/3.9.0
+    status:
+      code: 200
+      message: OK
+version: 1

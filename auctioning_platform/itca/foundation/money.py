@@ -5,7 +5,8 @@ from typing import Any, ClassVar, Type
 
 
 class Currency:
-    decimal_precision: int
+    decimal_precision: ClassVar[int]
+    iso_code: ClassVar[str]
     __subclasses: ClassVar[dict[str, Type["Currency"]]] = {}
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
@@ -18,6 +19,12 @@ class Currency:
 
 class USD(Currency):
     decimal_precision = 2
+    iso_code = "USD"
+
+
+class EUR(Currency):
+    decimal_precision = 2
+    iso_code = "EUR"
 
 
 @total_ordering

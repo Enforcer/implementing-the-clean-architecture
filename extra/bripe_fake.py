@@ -15,6 +15,13 @@ class ChargePayloadSchema(Schema):
 
 @app.post("/api/v1/charge")
 def charge() -> Any:
+    auth = request.authorization
+    if auth is None:
+        abort(401)
+
+    if (auth.username, auth.password) != ("test", "test"):
+        abort(403)
+
     if not request.is_json:
         abort(400)
 

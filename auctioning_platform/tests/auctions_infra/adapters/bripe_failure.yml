@@ -1,0 +1,44 @@
+interactions:
+- request:
+    body: '{"card_token": "", "currency": "EUR", "amount": 500}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic dGVzdDp0ZXN0
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '52'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+    method: POST
+    uri: http://localhost:5050/api/v1/charge
+  response:
+    body:
+      string: '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+        <title>400 Bad Request</title>
+
+        <h1>Bad Request</h1>
+
+        <p>The browser (or proxy) sent a request that this server could not understand.</p>
+
+        '
+    headers:
+      Content-Length:
+      - '192'
+      Content-Type:
+      - text/html; charset=utf-8
+      Date:
+      - Sat, 18 Sep 2021 13:44:30 GMT
+      Server:
+      - Werkzeug/2.0.1 Python/3.9.0
+    status:
+      code: 400
+      message: BAD REQUEST
+version: 1
