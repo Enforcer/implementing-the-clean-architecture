@@ -3,9 +3,17 @@ from sqlalchemy.orm import Session
 
 from itca.auctions import AuctionDetails, AuctionsRepository
 from itca.auctions_infra.queries.auction_details import SqlAlchemyAuctionDetails
+from itca.auctions_infra.read_models.auction_details import auction_read_model
 from itca.auctions_infra.repositories.auctions import (
     SqlAlchemyAuctionsRepository,
 )
+
+__all__ = [
+    # module
+    "AuctionsInfra",
+    # read models
+    "auction_read_model",
+]
 
 
 class AuctionsInfra(injector.Module):
