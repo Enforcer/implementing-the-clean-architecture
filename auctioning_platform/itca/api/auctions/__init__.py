@@ -1,6 +1,7 @@
 import flask_injector
 import injector
 
+from itca.api.auctions.auction import auction  # noqa: F401
 from itca.api.auctions.bid import PlacingBidWebPresenter
 from itca.auctions import PlacingBidOutputBoundary
 

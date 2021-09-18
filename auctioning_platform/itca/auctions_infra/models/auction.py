@@ -8,4 +8,5 @@ class Auction(Base):
 
     id = Column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
     starting_price = Column(JSONB(), nullable=False)
+    current_price = Column(JSONB(), nullable=False)
     ends_at = Column(DateTime(), nullable=False)

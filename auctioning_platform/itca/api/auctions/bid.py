@@ -36,7 +36,7 @@ class PlacingBidWebPresenter(PlacingBidOutputBoundary):
         return self._response
 
 
-@auctions_blueprint.route("/<int:auction_id>/bids", methods=["POST"])
+@auctions_blueprint.post("/<int:auction_id>/bids")
 def place_bid(
     auction_id: int,
     placing_bid_uc: PlacingBid,

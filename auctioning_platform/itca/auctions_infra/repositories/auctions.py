@@ -36,6 +36,7 @@ class SqlAlchemyAuctionsRepository(AuctionsRepository):
             AuctionModel(
                 id=auction.id,
                 starting_price=dict_repr["_starting_price"],
+                current_price=converter.unstructure(auction.current_price),
                 ends_at=dict_repr["_ends_at"],
             )
         )

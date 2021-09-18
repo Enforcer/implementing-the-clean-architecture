@@ -1,5 +1,9 @@
 import injector
 
+from itca.auctions.app.queries.auction_details import (
+    AuctionDetails,
+    AuctionDetailsDto,
+)
 from itca.auctions.app.repositories.auctions import AuctionsRepository
 from itca.auctions.app.use_cases.placing_bid import (
     PlacingBid,
@@ -16,6 +20,9 @@ __all__ = [
     "PlacingBidInputDto",
     "PlacingBidOutputDto",
     "PlacingBidOutputBoundary",
+    # Queries
+    "AuctionDetails",
+    "AuctionDetailsDto",
 ]
 
 
