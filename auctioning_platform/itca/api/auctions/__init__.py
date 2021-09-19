@@ -6,7 +6,7 @@ from itca.api.auctions.bid import PlacingBidWebPresenter
 from itca.auctions import PlacingBidOutputBoundary
 
 
-class AuctionsWeb(injector.Module):
+class AuctionsApi(injector.Module):
     @flask_injector.request
     @injector.provider
     def placing_bid_output_boundary(self) -> PlacingBidOutputBoundary:
