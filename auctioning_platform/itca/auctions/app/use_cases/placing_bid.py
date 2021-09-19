@@ -7,6 +7,7 @@ from attr import define
 from itca.auctions.app.repositories.auctions import AuctionsRepository
 from itca.auctions.domain.value_objects.auction_id import AuctionId
 from itca.auctions.domain.value_objects.bidder_id import BidderId
+from itca.foundation.event_bus import EventBus
 from itca.foundation.money import Money
 
 
@@ -37,10 +38,11 @@ class PlacingBidInputDto:
 class PlacingBid:
     _output_boundary: PlacingBidOutputBoundary
     _auctions_repo: AuctionsRepository
+    _event_bus: EventBus
 
     def execute(self, input_dto: PlacingBidInputDto) -> None:
         auction = self._auctions_repo.get(input_dto.auction_id)
-        auction.place_bid(
+        events = auction.place_bid(
             bidder_id=input_dto.bidder_id, amount=input_dto.amount
         )
         self._auctions_repo.save(auction)
@@ -52,3 +54,6 @@ class PlacingBid:
                 current_price=auction.current_price,
             )
         )
+
+        for event in events:
+            self._event_bus.publish(event)

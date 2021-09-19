@@ -3,12 +3,16 @@ from typing import Optional
 
 from attr import define
 
+from itca.auctions.domain.events.bidder_has_been_overbid import (
+    BidderHasBeenOverbid,
+)
 from itca.auctions.domain.exceptions.bid_on_ended_auction import (
     BidOnEndedAuction,
 )
 from itca.auctions.domain.value_objects.auction_id import AuctionId
 from itca.auctions.domain.value_objects.bid_id import BidId
 from itca.auctions.domain.value_objects.bidder_id import BidderId
+from itca.foundation.event import Event
 from itca.foundation.money import Money
 
 
@@ -33,17 +37,33 @@ class Auction:
     def id(self) -> AuctionId:
         return self._id
 
-    def place_bid(self, bidder_id: BidderId, amount: Money) -> None:
-        if datetime.now() > self._ends_at:
-            raise BidOnEndedAuction
+    def place_bid(self, bidder_id: BidderId, amount: Money) -> list[Event]:
+        events: list[Event] = []
+        self._ensure_not_ended()
 
         if amount > self.current_price:
+            if self._bids:
+                events.append(
+                    BidderHasBeenOverbid(
+                        auction_id=self.id,
+                        bidder_id=self._highest_bid.bidder_id,
+                        old_price=self._highest_bid.amount,
+                        new_price=amount,
+                    )
+                )
+
             new_bid = Bid(
                 id=None,
                 bidder_id=bidder_id,
                 amount=amount,
             )
             self._bids.append(new_bid)
+
+        return events
+
+    def _ensure_not_ended(self) -> None:
+        if datetime.now() > self._ends_at:
+            raise BidOnEndedAuction
 
     @property
     def current_price(self) -> Money:

@@ -11,6 +11,7 @@ from itca.auctions.app.use_cases.placing_bid import (
     PlacingBidOutputBoundary,
     PlacingBidOutputDto,
 )
+from itca.foundation.event_bus import EventBus
 
 __all__ = [
     # module
@@ -34,5 +35,7 @@ class Auctions(injector.Module):
         auctions_repo: AuctionsRepository,
     ) -> PlacingBid:
         return PlacingBid(
-            output_boundary=output_boundary, auctions_repo=auctions_repo
+            output_boundary=output_boundary,
+            auctions_repo=auctions_repo,
+            event_bus=EventBus(),
         )

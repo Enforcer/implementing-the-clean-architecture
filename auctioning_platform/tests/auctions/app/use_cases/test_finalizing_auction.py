@@ -13,6 +13,7 @@ from itca.auctions.app.use_cases.finalizing_auction import (
     FinalizingAuction,
     FinalizingAuctionInputDto,
 )
+from itca.foundation.event_bus import EventBus
 from itca.foundation.money import USD, Money
 from tests.auctions.factories import create_auction
 
@@ -45,4 +46,5 @@ def placing_bid(repo: AuctionsRepository) -> PlacingBid:
     return PlacingBid(
         output_boundary=Mock(PlacingBidOutputBoundary),
         auctions_repo=repo,
+        event_bus=Mock(EventBus),
     )
