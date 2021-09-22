@@ -3,6 +3,13 @@ from decimal import Decimal, DecimalException
 from functools import total_ordering
 from typing import Any, ClassVar, Type
 
+__all__ = [
+    "Money",
+    "Currency",
+    "USD",
+    "EUR",
+]
+
 
 class Currency:
     decimal_precision: ClassVar[int]
