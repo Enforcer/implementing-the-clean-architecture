@@ -18,7 +18,6 @@ from itca.payments.facade import PaymentsFacade
 __all__ = [
     # Module
     "Payments",
-    "PaymentsConfig",
     # Facade
     "PaymentsFacade",
     # Events
