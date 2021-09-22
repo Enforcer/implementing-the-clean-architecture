@@ -9,9 +9,9 @@ from itca.auctions_infra.repositories.auctions import (
 )
 
 __all__ = [
-    # module
+    # Module
     "AuctionsInfra",
-    # read models
+    # Read models
     "auction_read_model",
 ]
 

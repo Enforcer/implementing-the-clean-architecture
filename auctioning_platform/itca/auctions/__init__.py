@@ -11,19 +11,26 @@ from itca.auctions.app.use_cases.placing_bid import (
     PlacingBidOutputBoundary,
     PlacingBidOutputDto,
 )
+from itca.auctions.domain.value_objects.auction_id import AuctionId
 from itca.foundation.event_bus import EventBus
 
 __all__ = [
-    # module
+    # Module
     "Auctions",
     # Use Cases
     "PlacingBid",
-    "PlacingBidInputDto",
-    "PlacingBidOutputDto",
-    "PlacingBidOutputBoundary",
     # Queries
     "AuctionDetails",
+    # DTOs
+    "PlacingBidInputDto",
+    "PlacingBidOutputDto",
     "AuctionDetailsDto",
+    # Output Boundaries
+    "PlacingBidOutputBoundary",
+    # Repositories
+    "AuctionsRepository",
+    # Types
+    "AuctionId",
 ]
 
 
