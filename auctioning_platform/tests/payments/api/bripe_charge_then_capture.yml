@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: '{"card_token": "irrevelant", "currency": "USD", "amount": "1500"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic dGVzdDp0ZXN0
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '65'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+    method: POST
+    uri: http://localhost:5050/api/v1/charge
+  response:
+    body:
+      string: '{"charge_uuid":"f0a10345-ae65-4a6b-9de9-a61f1a3981bd","success":true}
+
+        '
+    headers:
+      Content-Length:
+      - '70'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 22 Sep 2021 19:54:10 GMT
+      Server:
+      - Werkzeug/2.0.1 Python/3.9.0
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Basic dGVzdDp0ZXN0
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.26.0
+    method: POST
+    uri: http://localhost:5050/api/v1/charges/f0a10345-ae65-4a6b-9de9-a61f1a3981bd/capture
+  response:
+    body:
+      string: '{"success":true}
+
+        '
+    headers:
+      Content-Length:
+      - '17'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 22 Sep 2021 19:54:10 GMT
+      Server:
+      - Werkzeug/2.0.1 Python/3.9.0
+    status:
+      code: 200
+      message: OK
+version: 1

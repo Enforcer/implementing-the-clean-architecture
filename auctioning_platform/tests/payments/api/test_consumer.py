@@ -1,9 +1,13 @@
+from pathlib import Path
+
 import pytest
+import vcr
 
 from itca.foundation.money import USD, Money
 from itca.payments.api import ApiConsumer, PaymentFailedError
 
 
+@vcr.use_cassette(str(Path(__file__).parent / "bripe_charge_then_capture.yml"))
 def test_charge_then_capture(
     api_consumer: ApiConsumer, card_token: str
 ) -> None:
