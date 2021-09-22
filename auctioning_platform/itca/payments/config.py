@@ -1,7 +1,7 @@
-from dataclasses import dataclass
+from attr import define
 
 
-@dataclass(repr=False)
+@define(repr=False)
 class PaymentsConfig:
     username: str
     password: str

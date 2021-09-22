@@ -30,14 +30,16 @@ __all__ = [
 
 
 class Payments(injector.Module):
+    def __init__(self, username: str, password: str) -> None:
+        self._config = PaymentsConfig(username, password)
+
     @injector.provider
     def facade(
         self,
-        config: PaymentsConfig,
         connection: Connection,
         event_bus: EventBus,
     ) -> PaymentsFacade:
-        return PaymentsFacade(config, connection, event_bus)
+        return PaymentsFacade(self._config, connection, event_bus)
 
     def configure(self, binder: injector.Binder) -> None:
         binder.multibind(
