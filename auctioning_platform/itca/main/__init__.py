@@ -6,6 +6,7 @@ from injector import Injector
 from itca.auctions import Auctions
 from itca.auctions_infra import AuctionsInfra
 from itca.db import Db
+from itca.payments import Payments
 
 
 def assemble(config_path: str = "config.ini") -> Injector:
@@ -16,6 +17,10 @@ def assemble(config_path: str = "config.ini") -> Injector:
             Db(url=config["database"]["url"]),
             Auctions(),
             AuctionsInfra(),
+            Payments(
+                username=config["bripe"]["username"],
+                password=config["bripe"]["password"],
+            ),
         ],
         auto_bind=False,
     )
