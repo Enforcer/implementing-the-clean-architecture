@@ -1,10 +1,12 @@
 import injector
+from attr import define
 from sqlalchemy.engine import Connection
 
 from itca.foundation.event_bus import (
     AsyncEventListenerProvider,
     AsyncListener,
     EventBus,
+    Listener,
 )
 from itca.payments.config import PaymentsConfig
 from itca.payments.events import (
@@ -28,6 +30,14 @@ __all__ = [
 ]
 
 
+@define
+class OnPaymentCharged(Listener[PaymentCharged]):  # type: ignore
+    _facade: PaymentsFacade
+
+    def __call__(self, event: PaymentCharged) -> None:
+        self._facade.capture(event.payment_uuid, event.customer_id)
+
+
 class Payments(injector.Module):
     def __init__(self, username: str, password: str) -> None:
         self._config = PaymentsConfig(username, password)
@@ -43,14 +53,11 @@ class Payments(injector.Module):
     def configure(self, binder: injector.Binder) -> None:
         binder.multibind(
             AsyncListener[PaymentCharged],
-            to=AsyncEventListenerProvider(PaymentChargedHandler),
+            to=AsyncEventListenerProvider(OnPaymentCharged),
         )
 
-
-class PaymentChargedHandler:
-    @injector.inject
-    def __init__(self, facade: PaymentsFacade) -> None:
-        self._facade = facade
-
-    def __call__(self, event: PaymentCharged) -> None:
-        self._facade.capture(event.payment_uuid, event.customer_id)
+    @injector.provider
+    def on_payment_charged(
+        self, payments_facade: PaymentsFacade
+    ) -> OnPaymentCharged:
+        return OnPaymentCharged(facade=payments_facade)
