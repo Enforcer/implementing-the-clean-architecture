@@ -3,7 +3,7 @@ from typing import Callable
 import injector
 from attr import attrib, define
 from sqlalchemy import create_engine
-from sqlalchemy.engine import Engine
+from sqlalchemy.engine import Connection, Engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from itca.db.base import Base, metadata
@@ -39,3 +39,8 @@ class Db(injector.Module):
     @injector.provider
     def session(self) -> Session:
         return self._session_factory()
+
+    @injector.threadlocal
+    @injector.provider
+    def connection(self, current_session: Session) -> Connection:
+        return current_session.connection()
