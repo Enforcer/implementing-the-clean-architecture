@@ -6,7 +6,7 @@ from injector import Injector
 from itca.auctions import Auctions
 from itca.auctions_infra import AuctionsInfra
 from itca.db import Db
-from itca.main.event_bus import EventBus
+from itca.main.event_bus import EventBusModule
 from itca.payments import Payments
 
 
@@ -16,7 +16,7 @@ def assemble(config_path: str = "config.ini") -> Injector:
     return Injector(
         [
             Db(url=config["database"]["url"]),
-            EventBus(),
+            EventBusModule(),
             Auctions(),
             AuctionsInfra(),
             Payments(
