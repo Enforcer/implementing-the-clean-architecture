@@ -9,9 +9,7 @@ app = Flask(__name__)
 
 class ChargePayloadSchema(Schema):
     card_token = fields.Str(required=True)
-    currency = fields.Str(
-        required=True, validate=validate.OneOf(["USD", "PLN"])
-    )
+    currency = fields.Str(required=True, validate=validate.OneOf(["USD", "PLN"]))
     amount = fields.Int(required=True)
 
 
