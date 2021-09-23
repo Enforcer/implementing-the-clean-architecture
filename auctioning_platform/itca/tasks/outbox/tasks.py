@@ -16,7 +16,9 @@ logger = logging.getLogger(__name__)
 def send_out_from_outbox() -> None:
     session: Session = app.__container__.get(Session)
     with session.begin():
-        pending_stmt = select(OutboxMessage).limit(100)
+        pending_stmt = (
+            select(OutboxMessage).order_by(OutboxMessage.id).limit(100)
+        )
 
         messages: list[OutboxMessage] = (
             session.execute(pending_stmt).scalars().all()
