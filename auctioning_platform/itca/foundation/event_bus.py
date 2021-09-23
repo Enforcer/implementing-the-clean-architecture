@@ -13,9 +13,9 @@ class EventBus:
 
 
 class Listener(list[T]):
-    """Simple generic used to associate litstners with events using DI.
+    """Simple generic used to associate listeners with events using DI.
 
-    e.g Listener[AuctionEnded].
+    e.g Listener[BidderHasBeenOverbid].
     """
 
     pass
