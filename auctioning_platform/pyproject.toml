@@ -27,6 +27,7 @@ requests = "^2.26.0"
 yarl = "^1.6.3"
 types-requests = "^2.25.6"
 psycopg2-binary = "^2.9.1"
+celery = {extras = ["redis"], version = "^5.1.2"}
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
