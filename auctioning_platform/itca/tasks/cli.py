@@ -16,5 +16,8 @@ celery_injector.install(app, container)
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender: Celery, **kwargs: Any) -> None:
     sender.add_periodic_task(
-        1.0, send_out_from_outbox.s(), name="Send out from outbox"
+        1.0,
+        send_out_from_outbox.s(),
+        name="Send out from outbox",
+        expires=1,
     )
