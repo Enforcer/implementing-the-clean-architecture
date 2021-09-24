@@ -18,7 +18,11 @@ class CustomerRelationshipFacade:
         auction_title: str,
         new_price: Money,
     ) -> None:
-        ...
+        print(
+            f"Hey, you - #{customer_id}!"
+            f"You've been overbid on auction #{auction_id} '{auction_title}'"
+            f"New price is {new_price}."
+        )
 
     def notify_about_winning_auction(
         self,
