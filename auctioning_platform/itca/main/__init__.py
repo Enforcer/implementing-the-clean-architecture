@@ -5,6 +5,7 @@ from injector import Injector
 
 from itca.auctions import Auctions
 from itca.auctions_infra import AuctionsInfra
+from itca.customer_relationship import CustomerRelationship
 from itca.db import Db
 from itca.main.event_bus import EventBusModule
 from itca.payments import Payments
@@ -23,6 +24,7 @@ def assemble(config_path: str = "config.ini") -> Injector:
                 username=config["bripe"]["username"],
                 password=config["bripe"]["password"],
             ),
+            CustomerRelationship(),
         ],
         auto_bind=False,
     )
