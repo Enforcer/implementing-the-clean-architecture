@@ -405,6 +405,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "mmh3"
+version = "3.0.0"
+description = "Python wrapper for MurmurHash (MurmurHash3), a set of fast and robust hash functions."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "multidict"
 version = "5.1.0"
 description = "multidict implementation"
@@ -479,6 +487,19 @@ python-versions = ">=3.6"
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+
+[[package]]
+name = "pottery"
+version = "1.3.6"
+description = "Redis for Humans."
+category = "main"
+optional = false
+python-versions = ">=3.6, <4"
+
+[package.dependencies]
+mmh3 = "*"
+redis = ">=3.4.1"
+typing-extensions = "*"
 
 [[package]]
 name = "prompt-toolkit"
@@ -661,6 +682,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "types-redis"
+version = "3.5.8"
+description = "Typing stubs for redis"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "types-requests"
 version = "2.25.6"
 description = "Typing stubs for requests"
@@ -672,7 +701,7 @@ python-versions = "*"
 name = "typing-extensions"
 version = "3.10.0.2"
 description = "Backported and Experimental Type Hints for Python 3.5+"
-category = "dev"
+category = "main"
 optional = false
 python-versions = "*"
 
@@ -753,7 +782,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e8e7e0d13c62d77f31a5ae698e1d7081c31cfe35aa8fbc52a4d660c28bce966a"
+content-hash = "f86d25aa9a7519412e496f9970d7fd772a69c3e123dc614005e299458f604ad2"
 
 [metadata.files]
 alembic = [
@@ -955,6 +984,34 @@ mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
+mmh3 = [
+    {file = "mmh3-3.0.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:23912dde2ad4f701926948dd8e79a0e42b000f73962806f153931f52985e1e07"},
+    {file = "mmh3-3.0.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:07f1308a410dc406d6a3c282a685728d00a87f3ed684f012671b96d6cc6a41c3"},
+    {file = "mmh3-3.0.0-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:167cbc2b5ae27f3bccd797a2e8a9e7561791bee4cc2885f2c140eedc5df000ef"},
+    {file = "mmh3-3.0.0-cp36-cp36m-manylinux2014_aarch64.whl", hash = "sha256:8fb833c2942917eff54f984b067d93e5a3c54dbb00720323460cdfed9292835f"},
+    {file = "mmh3-3.0.0-cp36-cp36m-win32.whl", hash = "sha256:b7d26d0243ed9a5b8bf7aa8c53697cb79dff1e1d207f42396b7a7cb2a62298b7"},
+    {file = "mmh3-3.0.0-cp36-cp36m-win_amd64.whl", hash = "sha256:2b6c79fc314b34b911245b460a79b601fff39bb807521fb7ed7c15cacf0394ac"},
+    {file = "mmh3-3.0.0-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:6d0b3e9def1fdfe4eadd35ee26bf72bd715ba97711f7101302d54c9d2e70ba27"},
+    {file = "mmh3-3.0.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:8803d28c17cf898f5f00c0433e8b13d51fa3bb4ebecf59872ba1eaa20d94128a"},
+    {file = "mmh3-3.0.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:01e456edf9cc381298a590923aadd1c0bf9934d93433099a5001d656112437c2"},
+    {file = "mmh3-3.0.0-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:ff69ddc2d46e3e42720840b6b4f7bfb032fd1e677fac347fdfff6e4d9fd01212"},
+    {file = "mmh3-3.0.0-cp37-cp37m-win32.whl", hash = "sha256:e08a5d81a2ff53625953290187bed4ae96a6972e2b5cd5984a6ebc5a9aab256c"},
+    {file = "mmh3-3.0.0-cp37-cp37m-win_amd64.whl", hash = "sha256:12484ac80373db77d8a6beb7615e7dac8b6c3fb118905311a51450b4fc4a24d1"},
+    {file = "mmh3-3.0.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:93c96e657e9bf9e9ef12ddaeae9f109c0b3134146e2eff2cbddde5a34190920e"},
+    {file = "mmh3-3.0.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:9097be65aa95460bc68b6108601da8894757532450daf74034e4eaecd536acca"},
+    {file = "mmh3-3.0.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:19874e12acb4119ef1ef83062ef4ac953c3343dd07a67ede8fa096d0393f34be"},
+    {file = "mmh3-3.0.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:4589adcb609d1547aac7c1ac1064eb27cdd44b65b7e8a114e2971cd3b7110306"},
+    {file = "mmh3-3.0.0-cp38-cp38-win32.whl", hash = "sha256:7a311efd4ecf122f21392ec6bf447c620cc783d20bdb9aec60bb469a54318419"},
+    {file = "mmh3-3.0.0-cp38-cp38-win_amd64.whl", hash = "sha256:3566d1455fa4a09f8fb1aa5b37f68914949674f9aa2bd630e9fdf344207f55b5"},
+    {file = "mmh3-3.0.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:92fdffd63edb67c30dbaba18a7448d762209c0e678b0c9d577d17b30362b59a3"},
+    {file = "mmh3-3.0.0-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:3e52b869572c09db0c1a483f6e9cedbccfae8a282d95e552d3d4bd0712ab3196"},
+    {file = "mmh3-3.0.0-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:f1cce018cc82a8a6287e6aeb139e441129837b810f2ddf372e3ff7f0fefb0947"},
+    {file = "mmh3-3.0.0-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:0fd09c4b61fcddbcf0a87d5463b4e6d2919896736a67efc5248d5c74c1c9c742"},
+    {file = "mmh3-3.0.0-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:c17fe2e276edd37ad8a6aff3b1663d3479c2c5c5993539c1050422a1dae33033"},
+    {file = "mmh3-3.0.0-cp39-cp39-win32.whl", hash = "sha256:150439b906b4deaf6d796b2c2d11fb6159f08d02330d97723071ab3bf43b51df"},
+    {file = "mmh3-3.0.0-cp39-cp39-win_amd64.whl", hash = "sha256:bd870aedd9189eff1cf4e1687869b56c7e9461ee869789139c3e704009e5c227"},
+    {file = "mmh3-3.0.0.tar.gz", hash = "sha256:d1ec578c09a07d3518ec9be540b87546397fa3455de73c166fcce51eaa5c41c5"},
+]
 multidict = [
     {file = "multidict-5.1.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:b7993704f1a4b204e71debe6095150d43b2ee6150fa4f44d6d966ec356a8d61f"},
     {file = "multidict-5.1.0-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:9dd6e9b1a913d096ac95d0399bd737e00f2af1e1594a787e00f7975778c8b2bf"},
@@ -1038,6 +1095,10 @@ platformdirs = [
 pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
+]
+pottery = [
+    {file = "pottery-1.3.6-py3-none-any.whl", hash = "sha256:5b081eded2a201de2af82a8bc2deb22bd10ead48e1abbb3a319f29f46600b31a"},
+    {file = "pottery-1.3.6.tar.gz", hash = "sha256:cae794d217075276b1849553dd1db2eae4381265e35cbc3e2398343de7270ddb"},
 ]
 prompt-toolkit = [
     {file = "prompt_toolkit-3.0.20-py3-none-any.whl", hash = "sha256:6076e46efae19b1e0ca1ec003ed37a933dc94b4d20f486235d436e64771dcd5c"},
@@ -1215,6 +1276,10 @@ toml = [
 tomli = [
     {file = "tomli-1.2.1-py3-none-any.whl", hash = "sha256:8dd0e9524d6f386271a36b41dbf6c57d8e32fd96fd22b6584679dc569d20899f"},
     {file = "tomli-1.2.1.tar.gz", hash = "sha256:a5b75cb6f3968abb47af1b40c1819dc519ea82bcc065776a866e8d74c5ca9442"},
+]
+types-redis = [
+    {file = "types-redis-3.5.8.tar.gz", hash = "sha256:be26f50259d1a7e74cbc1e83b377dbf6b534fdb037ff55ae31501e87ac2b5b5a"},
+    {file = "types_redis-3.5.8-py3-none-any.whl", hash = "sha256:85814769071721044857c34841e46064b867ccdd58fc81221c43462bd07e4892"},
 ]
 types-requests = [
     {file = "types-requests-2.25.6.tar.gz", hash = "sha256:e21541c0f55c066c491a639309159556dd8c5833e49fcde929c4c47bdb0002ee"},
