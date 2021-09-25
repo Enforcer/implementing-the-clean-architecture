@@ -79,4 +79,10 @@ class PayingForWonAuctionProcess:
             expires_after=60,
             wait_for=1,
         ):
-            yield self._repository.get_by_auction(state.auction_id)
+            from sqlalchemy.exc import InvalidRequestError
+
+            try:
+                self._repository._session.expire(state)  # type: ignore
+            except InvalidRequestError:
+                pass  # happens when state is not expired yet
+            yield state

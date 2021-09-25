@@ -53,19 +53,6 @@ def auction_details() -> Mock:
     return Mock(spec_set=AuctionDetails)
 
 
-@pytest.fixture(scope="session")
-def container() -> Injector:
-    from itca.main import assemble
-
-    c = assemble("test_config.ini")
-    from sqlalchemy.engine import Engine
-
-    from itca.db import metadata
-
-    metadata.create_all(bind=c.get(Engine))
-    return c
-
-
 class DummyLock(Lock):
     @contextmanager
     def acquire(self, name: str, expires_after: int, wait_for: int) -> Iterator:
