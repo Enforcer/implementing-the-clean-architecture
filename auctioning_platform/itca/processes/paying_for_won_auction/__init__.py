@@ -5,6 +5,7 @@ from itca.auctions import AuctionDetails, AuctionEnded
 from itca.customer_relationship import CustomerRelationshipFacade
 from itca.foundation.event_bus import AsyncEventListenerProvider, AsyncListener
 from itca.payments import PaymentCaptured, PaymentsFacade
+from itca.processes.locking import Lock
 from itca.processes.paying_for_won_auction.process_manager import (
     PayingForWonAuctionProcess,
 )
@@ -39,12 +40,14 @@ class PayingForWonAuctionModule(injector.Module):
         customer_relationship: CustomerRelationshipFacade,
         auction_details: AuctionDetails,
         repository: PayingForWonAuctionStateRepository,
+        locks: Lock,
     ) -> PayingForWonAuctionProcess:
         return PayingForWonAuctionProcess(
             payments=payments,
             customer_relationship=customer_relationship,
             auction_details=auction_details,
             repository=repository,
+            locks=locks,
         )
 
     @injector.provider

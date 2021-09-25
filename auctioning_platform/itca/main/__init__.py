@@ -1,3 +1,4 @@
+import logging
 from configparser import ConfigParser
 from pathlib import Path
 
@@ -14,6 +15,7 @@ from itca.processes import Processes
 
 def assemble(config_path: str = "config.ini") -> Injector:
     config = read_config(config_path)
+    configure_loggers()
 
     return Injector(
         [
@@ -26,7 +28,7 @@ def assemble(config_path: str = "config.ini") -> Injector:
                 password=config["bripe"]["password"],
             ),
             CustomerRelationship(),
-            Processes(),
+            Processes(redis_url=config["redis"]["url"]),
         ],
         auto_bind=False,
     )
@@ -37,3 +39,7 @@ def read_config(config_path: str) -> ConfigParser:
     config = ConfigParser()
     config.read(config_path)
     return config
+
+
+def configure_loggers() -> None:
+    logging.getLogger("itca.processes.locking").setLevel(logging.DEBUG)

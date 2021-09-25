@@ -24,6 +24,10 @@ class PayingForWonAuctionState:
         self._payment_uuid = uuid4()
 
     @property
+    def auction_id(self) -> int:
+        return self._auction_id
+
+    @property
     def payment_uuid(self) -> UUID:
         assert self._payment_uuid, "Begin it first!"
         return self._payment_uuid

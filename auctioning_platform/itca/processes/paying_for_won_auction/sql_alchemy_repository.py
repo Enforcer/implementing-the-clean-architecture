@@ -30,7 +30,7 @@ paying_for_won_auction_pm_table = Table(
     Column("winner_id", BigInteger(), nullable=False),
     Column("winning_bid_currency", String(3), nullable=False),
     Column("winning_bid_amount", Numeric(), nullable=False),
-    Column("payment_uuid", GUID(), nullable=False),
+    Column("payment_uuid", GUID(), nullable=True),
     Column("payment_finished_at", DateTime(timezone=True), nullable=True),
     Column("shipment_started_at", DateTime(timezone=True), nullable=True),
     Column("shipment_sent_at", DateTime(timezone=True), nullable=True),
@@ -58,14 +58,14 @@ class SqlAStateRepository(PayingForWonAuctionStateRepository):
     _session: Session
 
     def get_by_auction(self, auction_id: int) -> PayingForWonAuctionState:
-        return (
-            self._session.query(PayingForWonAuctionState)
-            .filter_by(_auction_id=auction_id)
-            .first()
-        )
+        return self._session.query(PayingForWonAuctionState).get(auction_id)
 
     def get_by_payment(self, payment_uuid: UUID) -> PayingForWonAuctionState:
-        pass
+        return (
+            self._session.query(PayingForWonAuctionState)
+            .filter_by(_payment_uuid=payment_uuid)
+            .one()
+        )
 
     def add(self, state: PayingForWonAuctionState) -> None:
         self._session.add(state)

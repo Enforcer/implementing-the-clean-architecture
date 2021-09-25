@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+from typing import Iterator
 from unittest.mock import Mock
 
 import pytest
@@ -8,6 +10,7 @@ from itca.customer_relationship import CustomerRelationshipFacade
 from itca.foundation.money import USD, Money
 from itca.payments import PaymentsFacade
 from itca.processes.exceptions import InvalidRequest
+from itca.processes.locking import Lock
 from itca.processes.paying_for_won_auction import (
     PayingForWonAuctionProcess,
     PayingForWonAuctionStateRepository,
@@ -41,6 +44,7 @@ def pm(
         customer_relationship=Mock(spec_set=CustomerRelationshipFacade),
         auction_details=auction_details,
         repository=repo,
+        locks=DummyLock(),
     )
 
 
@@ -60,3 +64,9 @@ def container() -> Injector:
 
     metadata.create_all(bind=c.get(Engine))
     return c
+
+
+class DummyLock(Lock):
+    @contextmanager
+    def acquire(self, name: str, expires_after: int, wait_for: int) -> Iterator:
+        yield
