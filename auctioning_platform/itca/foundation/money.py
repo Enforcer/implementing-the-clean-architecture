@@ -1,7 +1,7 @@
 import inspect
 from decimal import Decimal, DecimalException
 from functools import total_ordering
-from typing import Any, ClassVar, Type
+from typing import Any, ClassVar, Tuple, Type
 
 __all__ = [
     "Money",
@@ -20,7 +20,7 @@ class Currency:
         cls.__subclasses[cls.__name__] = cls
 
     @classmethod
-    def from_name(cls, name: str) -> Type["Currency"]:
+    def from_code(cls, name: str) -> Type["Currency"]:
         return cls.__subclasses[name]
 
 
@@ -85,3 +85,6 @@ class Money:
             f"<{self.__class__.__name__}"
             f"({self.currency.__name__}, '{self.amount}')>"
         )
+
+    def __composite_values__(self) -> Tuple[str, Decimal]:
+        return self.currency.__name__, self.amount

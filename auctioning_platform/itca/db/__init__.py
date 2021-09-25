@@ -6,15 +6,18 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Connection, Engine
 from sqlalchemy.orm import Session, sessionmaker
 
-from itca.db.base import Base, metadata
+from itca.db.base import Base, mapper_registry, metadata
 from itca.db.guid import GUID
 from itca.db.jsonb import JSONB
 
 __all__ = [
     # Module
     "Db",
+    # SQLAlchemy registry objects & Base class for models
     "Base",
     "metadata",
+    "mapper_registry",
+    # Fields
     "JSONB",
     "GUID",
 ]

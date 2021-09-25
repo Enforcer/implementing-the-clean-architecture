@@ -31,4 +31,8 @@ class CustomerRelationshipFacade:
         auction_title: str,
         amount: Money,
     ) -> None:
-        ...
+        print(
+            f"Hey, you - #{customer_id}!"
+            f"You've won the auction #{auction_id} '{auction_title}'"
+            f"Now, you owe us {amount}."
+        )

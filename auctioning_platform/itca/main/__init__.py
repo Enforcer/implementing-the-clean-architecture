@@ -9,6 +9,7 @@ from itca.customer_relationship import CustomerRelationship
 from itca.db import Db
 from itca.main.event_bus import EventBusModule
 from itca.payments import Payments
+from itca.processes import Processes
 
 
 def assemble(config_path: str = "config.ini") -> Injector:
@@ -25,6 +26,7 @@ def assemble(config_path: str = "config.ini") -> Injector:
                 password=config["bripe"]["password"],
             ),
             CustomerRelationship(),
+            Processes(),
         ],
         auto_bind=False,
     )

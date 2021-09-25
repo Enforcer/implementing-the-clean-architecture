@@ -11,6 +11,7 @@ from itca.auctions.app.use_cases.placing_bid import (
     PlacingBidOutputBoundary,
     PlacingBidOutputDto,
 )
+from itca.auctions.domain.events.auction_ended import AuctionEnded
 from itca.auctions.domain.events.bidder_has_been_overbid import (
     BidderHasBeenOverbid,
 )
@@ -36,6 +37,7 @@ __all__ = [
     "AuctionId",
     # Events
     "BidderHasBeenOverbid",
+    "AuctionEnded",
 ]
 
 

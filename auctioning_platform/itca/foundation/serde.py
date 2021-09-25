@@ -18,7 +18,7 @@ converter.register_unstructure_hook(UUID, str)
 converter.register_structure_hook(
     Money,
     lambda money_dict, _: Money(
-        Currency.from_name(money_dict["currency"]), money_dict["amount"]
+        Currency.from_code(money_dict["currency"]), money_dict["amount"]
     ),
 )
 converter.register_structure_hook(

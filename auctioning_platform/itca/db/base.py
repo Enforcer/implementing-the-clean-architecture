@@ -1,9 +1,10 @@
 from typing import Any
 
 from sqlalchemy import MetaData, Table
-from sqlalchemy.orm import as_declarative
+from sqlalchemy.orm import as_declarative, registry
 
 metadata = MetaData()
+mapper_registry = registry(metadata=metadata)
 
 
 @as_declarative(metadata=metadata)
