@@ -44,7 +44,12 @@ def execute_listener(
     event = converter.structure(event_payload, event_cls)
 
     listener = app.__container__.get(listener_cls)
-    listener(event)
+    session = app.__container__.get(Session)
+    try:
+        listener(event)
+        session.commit()
+    finally:
+        session.close()
 
 
 def get_cls_by_qualified_name(qualified_name: str) -> Type:
