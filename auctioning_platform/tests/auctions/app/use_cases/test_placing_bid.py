@@ -38,10 +38,9 @@ def test_presents_winning_and_10_usd_price_when_higher_bid_placed(
     )
     use_case.execute(input_dto)
 
-    expected_output_dto = PlacingBidOutputDto(
-        is_winning=True, current_price=price
+    output_boundary_mock.present.assert_called_once_with(
+        PlacingBidOutputDto(is_winning=True, current_price=price)
     )
-    output_boundary_mock.present.assert_called_once_with(expected_output_dto)
 
 
 def test_bidding_on_ended_auction_raises_exception(
