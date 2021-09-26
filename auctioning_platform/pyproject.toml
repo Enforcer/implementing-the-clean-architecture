@@ -31,6 +31,7 @@ celery = {extras = ["redis"], version = "^5.1.2"}
 redis = "^3.5.3"
 pottery = "^1.3.6"
 types-redis = "^3.5.8"
+factory-boy = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.9b0"
