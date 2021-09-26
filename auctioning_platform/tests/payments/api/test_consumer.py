@@ -8,7 +8,7 @@ from itca.payments.api import ApiConsumer, PaymentFailedError
 
 
 @vcr.use_cassette(str(Path(__file__).parent / "bripe_charge_then_capture.yml"))
-def test_charge_then_capture(
+def test_capture_after_charge_succeeds(
     api_consumer: ApiConsumer, card_token: str
 ) -> None:
     charge_id = api_consumer.charge(card_token, Money(USD, "15.00"))
