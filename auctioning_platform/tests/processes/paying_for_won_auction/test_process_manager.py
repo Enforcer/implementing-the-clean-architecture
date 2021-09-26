@@ -17,16 +17,20 @@ from itca.processes.paying_for_won_auction import (
 )
 
 
+class AuctionDetailsStub(AuctionDetails):
+    def query(self, auction_id: int) -> AuctionDetailsDto:
+        return AuctionDetailsDto(
+            auction_id=auction_id,
+            title="Test",
+            current_price=Money(USD, "9.99"),
+            starting_price=Money(USD, "1.00"),
+            top_bidders=[],
+        )
+
+
 def test_cannot_be_started_twice_for_the_same_auction(
-    pm: PayingForWonAuctionProcess, auction_details: Mock
+    pm: PayingForWonAuctionProcess,
 ) -> None:
-    auction_details.query.return_value = AuctionDetailsDto(
-        auction_id=1,
-        title="Test",
-        current_price=Money(USD, "9.99"),
-        starting_price=Money(USD, "1.00"),
-        top_bidders=[],
-    )
     event = AuctionEnded(auction_id=1, winner_id=2, price=Money(USD, "9.99"))
     pm(event)
 
@@ -35,22 +39,15 @@ def test_cannot_be_started_twice_for_the_same_auction(
 
 
 @pytest.fixture()
-def pm(
-    container: Injector, auction_details: Mock
-) -> PayingForWonAuctionProcess:
+def pm(container: Injector) -> PayingForWonAuctionProcess:
     repo = container.get(PayingForWonAuctionStateRepository)  # type: ignore
     return PayingForWonAuctionProcess(
         payments=Mock(spec_set=PaymentsFacade),
         customer_relationship=Mock(spec_set=CustomerRelationshipFacade),
-        auction_details=auction_details,
+        auction_details=AuctionDetailsStub(),
         repository=repo,
         locks=DummyLock(),
     )
-
-
-@pytest.fixture()
-def auction_details() -> Mock:
-    return Mock(spec_set=AuctionDetails)
 
 
 class DummyLock(Lock):
