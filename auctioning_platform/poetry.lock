@@ -288,6 +288,17 @@ Flask = "*"
 injector = ">=0.10.0"
 
 [[package]]
+name = "freezegun"
+version = "1.1.0"
+description = "Let your Python tests travel through time"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+python-dateutil = ">=2.7"
+
+[[package]]
 name = "greenlet"
 version = "1.1.1"
 description = "Lightweight in-process concurrent programming"
@@ -728,6 +739,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "types-freezegun"
+version = "1.1.0"
+description = "Typing stubs for freezegun"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "types-redis"
 version = "3.5.8"
 description = "Typing stubs for redis"
@@ -828,7 +847,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8e515d95b473beaa7ef6d5dd823d14ad11ec9d4822085428d8fdbaf340f8eb8d"
+content-hash = "bc08e3862ee48f1b8a7b5c7c2e16bf39fe8800cbca0ef63b91037742a2834f95"
 
 [metadata.files]
 alembic = [
@@ -909,6 +928,10 @@ flask = [
 flask-injector = [
     {file = "Flask-Injector-0.13.0.tar.gz", hash = "sha256:d527f82dfa118acd3011da02edeef855ac7ec656383e2cb6b811071f4f6364a3"},
     {file = "Flask_Injector-0.13.0-py2.py3-none-any.whl", hash = "sha256:b056234827951ea5c1e5ccccd40b562540e24465913cccc95f4ab2ee831cd37c"},
+]
+freezegun = [
+    {file = "freezegun-1.1.0-py2.py3-none-any.whl", hash = "sha256:2ae695f7eb96c62529f03a038461afe3c692db3465e215355e1bb4b0ab408712"},
+    {file = "freezegun-1.1.0.tar.gz", hash = "sha256:177f9dd59861d871e27a484c3332f35a6e3f5d14626f2bf91be37891f18927f3"},
 ]
 greenlet = [
     {file = "greenlet-1.1.1-cp27-cp27m-macosx_10_14_x86_64.whl", hash = "sha256:476ba9435afaead4382fbab8f1882f75e3fb2285c35c9285abb3dd30237f9142"},
@@ -1338,6 +1361,10 @@ toml = [
 tomli = [
     {file = "tomli-1.2.1-py3-none-any.whl", hash = "sha256:8dd0e9524d6f386271a36b41dbf6c57d8e32fd96fd22b6584679dc569d20899f"},
     {file = "tomli-1.2.1.tar.gz", hash = "sha256:a5b75cb6f3968abb47af1b40c1819dc519ea82bcc065776a866e8d74c5ca9442"},
+]
+types-freezegun = [
+    {file = "types-freezegun-1.1.0.tar.gz", hash = "sha256:723d6c002c3c08c2ea87cf24e1eb64d887f5f580bcb517bd9d91d05418c740b9"},
+    {file = "types_freezegun-1.1.0-py3-none-any.whl", hash = "sha256:213d4a0bce6eddd38aaa6fd50a9caef16a89076cf33fa87b69af414716e4928f"},
 ]
 types-redis = [
     {file = "types-redis-3.5.8.tar.gz", hash = "sha256:be26f50259d1a7e74cbc1e83b377dbf6b534fdb037ff55ae31501e87ac2b5b5a"},
