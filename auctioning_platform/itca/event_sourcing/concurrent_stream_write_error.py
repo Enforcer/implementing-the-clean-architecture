@@ -1,0 +1,2 @@
+class ConcurrentStreamWriteError(RuntimeError):
+    pass
