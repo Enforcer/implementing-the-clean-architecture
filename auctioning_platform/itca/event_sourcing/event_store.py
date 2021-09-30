@@ -6,6 +6,15 @@ from itca.event_sourcing.event_stream import EventStream
 
 
 class EventStore(abc.ABC):
+    class NotFound(Exception):
+        pass
+
+    class NoEventsToAppend(Exception):
+        pass
+
+    class ConcurrentStreamWriteError(RuntimeError):
+        pass
+
     @abc.abstractmethod
     def load_stream(self, aggregate_uuid: UUID) -> EventStream:
         pass
