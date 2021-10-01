@@ -43,19 +43,19 @@ class CannotChangeOrderLinesOfPaidOrder(Exception):
 
 
 class Order:
-    def __init__(self, stream: EventStream) -> None:  # 1
+    def __init__(self, stream: EventStream) -> None:
         self._uuid = stream.uuid
         self._version = stream.version
 
-        self._paid_at: Optional[datetime] = None  # 2
+        self._paid_at: Optional[datetime] = None
         self._lines: dict[ProductId, OrderLine] = {}
 
-        for event in stream.events:  # 3
+        for event in stream.events:
             self._apply(event)
 
-        self._new_events: list[EsEvent] = []  # 4
+        self._new_events: list[EsEvent] = []
 
-    def _apply(self, event: EsEvent) -> None:  # 5
+    def _apply(self, event: EsEvent) -> None:
         if isinstance(event, OrderDrafted):
             pass
         elif isinstance(event, OrderPaid):
@@ -78,19 +78,19 @@ class Order:
             raise ValueError(f"Unknown event {type(event)}!")
 
     @classmethod
-    def draft(cls, uuid: UUID) -> "Order":  # 6
+    def draft(cls, uuid: UUID) -> "Order":
         instance = Order(EventStream(uuid=uuid, version=0, events=[]))
         instance._new_events.append(
             OrderDrafted(
                 uuid=uuid4(),
                 created_at=datetime.now(tz=timezone.utc),
                 aggregate_uuid=uuid,
-                version=0,
+                version=1,
             )
         )
         return instance
 
-    def mark_as_paid(self) -> None:  # 1
+    def mark_as_paid(self) -> None:
         if self._paid_at is not None:
             raise AlreadyPaid
 
@@ -104,7 +104,7 @@ class Order:
         self._new_events.append(event)
 
     @property
-    def _next_version(self) -> int:  # 2
+    def _next_version(self) -> int:
         try:
             last_event = self._new_events[-1]
             return last_event.version + 1
@@ -112,7 +112,7 @@ class Order:
             return self._version + 1
 
     @property
-    def changes(self) -> AggregateChanges:  # 3
+    def changes(self) -> AggregateChanges:
         return AggregateChanges(
             aggregate_uuid=self._uuid,
             events=self._new_events[:],
