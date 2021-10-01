@@ -1,0 +1,51 @@
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia/puml-theme-materia.puml
+@startuml
+actor Klient as client
+participant PlacingBidView as view
+participant PlacingBidInputDto as input_dto
+participant PlacingBidUseCase as use_case
+participant AuctionsDataAccess as data_access
+participant Auction as auction
+participant PlacingBidOutputDto as output_dto
+participant PlacingBidOutputBoundary as output_boundary
+
+client -> view: post(http_request)
+view -> input_dto: << create >>
+activate input_dto
+
+view -> use_case: execute(input_dto)
+activate use_case
+deactivate input_dto
+
+use_case -> data_access: get(auction_id)
+activate data_access
+
+data_access -> auction: << create >>
+activate auction
+
+data_access --> use_case: auction
+
+use_case -> auction: place_bid(bidder_id, amount)
+
+use_case -> data_access: save(auction)
+deactivate data_access
+
+use_case -> auction: winner << get >>
+auction --> use_case: winner_id
+use_case -> auction: current_price << get >>
+auction --> use_case: current_price
+deactivate auction
+
+use_case -> output_dto: << create >>
+activate output_dto
+
+use_case -> output_boundary: present(output_dto)
+activate output_boundary
+deactivate use_case
+
+output_boundary --> client: is a winner & current price
+deactivate output_dto
+deactivate output_boundary
+
+@enduml
+

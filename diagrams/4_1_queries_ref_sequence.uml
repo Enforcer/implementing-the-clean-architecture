@@ -1,0 +1,40 @@
+@startuml
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia/puml-theme-materia.puml
+actor Klient as client
+participant PlacingBidView as view
+participant PlacingBidInputDto as input_dto
+participant PlacingBidUseCase as use_case
+participant AuctionsDataAccess as data_access
+participant Auction as auction
+participant GetAuctionQuery as query
+
+client -> view: post(http_request)
+activate view
+
+view -> input_dto: << create >>
+activate input_dto
+
+view -> use_case: execute(input_dto)
+activate use_case
+deactivate input_dto
+
+use_case -> data_access: get(auction_id)
+activate data_access
+
+data_access -> auction: << create >>
+activate auction
+
+data_access --> use_case: auction
+
+use_case -> auction: place_bid(bidder_id, amount)
+
+use_case -> data_access: save(auction)
+deactivate data_access
+deactivate auction
+deactivate use_case
+
+view -> query: get_details(auction_id)
+query --> view: auction_details_dto
+
+@enduml
+
