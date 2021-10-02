@@ -2,6 +2,7 @@ import abc
 from uuid import UUID
 
 from itca.event_sourcing.aggregate_changes import AggregateChanges
+from itca.event_sourcing.event import EsEvent
 from itca.event_sourcing.event_stream import EventStream
 
 
@@ -21,4 +22,8 @@ class EventStore(abc.ABC):
 
     @abc.abstractmethod
     def append_to_stream(self, changes: AggregateChanges) -> None:
+        pass
+
+    @abc.abstractmethod
+    def save_snapshot(self, snapshot: EsEvent) -> None:
         pass

@@ -1,7 +1,9 @@
+from typing import Union
 from uuid import UUID
 
 from attr import define
 from sqlalchemy import insert, select, update
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 
 from itca.event_sourcing.aggregate_changes import AggregateChanges
@@ -10,6 +12,7 @@ from itca.event_sourcing.event_store import EventStore
 from itca.event_sourcing.event_stream import EventStream
 from itca.event_sourcing.models import Aggregate as AggregateModel
 from itca.event_sourcing.models import Event as EventModel
+from itca.event_sourcing.models import Snapshot as SnapshotModel
 from itca.foundation.serde import converter
 
 
@@ -18,12 +21,32 @@ class SqlAlchemyEventStore(EventStore):
     _session: Session
 
     def load_stream(self, aggregate_uuid: UUID) -> EventStream:
-        stmt = (
+        events_stmt = (
             select(EventModel)
             .filter(EventModel.aggregate_uuid == aggregate_uuid)
             .order_by(EventModel.version)
         )
-        events: list[EventModel] = self._session.execute(stmt).scalars().all()
+        events: list[Union[EventModel, SnapshotModel]]
+
+        try:
+            snapshot_stmt = (
+                select(SnapshotModel)
+                .filter(SnapshotModel.aggregate_uuid == aggregate_uuid)
+                .order_by(SnapshotModel.version.desc())
+                .limit(1)
+            )
+            latest_snapshot: SnapshotModel = (
+                self._session.execute(snapshot_stmt).scalars().one()
+            )
+        except NoResultFound:
+            events = self._session.execute(events_stmt).scalars().all()
+        else:
+            events_stmt = events_stmt.filter(
+                EventModel.version > latest_snapshot.version
+            )
+            events = [latest_snapshot] + self._session.execute(
+                events_stmt
+            ).scalars().all()
 
         if not events:
             raise EventStore.NotFound
@@ -39,7 +62,9 @@ class SqlAlchemyEventStore(EventStore):
             version=version,
         )
 
-    def _deserialize_event(self, event: EventModel) -> EsEvent:
+    def _deserialize_event(
+        self, event: Union[EventModel, SnapshotModel]
+    ) -> EsEvent:
         event_cls = EsEvent.subclass_for_name(event.name)
         return converter.structure(
             {
@@ -101,3 +126,15 @@ class SqlAlchemyEventStore(EventStore):
             )
 
         self._session.execute(insert(EventModel), rows)
+
+    def save_snapshot(self, snapshot: EsEvent) -> None:
+        snapshot_as_dict = converter.unstructure(snapshot)
+        row = {
+            "uuid": snapshot_as_dict.pop("uuid"),
+            "aggregate_uuid": snapshot_as_dict.pop("aggregate_uuid"),
+            "created_at": snapshot_as_dict.pop("created_at"),
+            "version": snapshot_as_dict.pop("version"),
+            "name": snapshot.__class__.__name__,
+            "data": snapshot_as_dict,
+        }
+        self._session.execute(insert(SnapshotModel), [row])

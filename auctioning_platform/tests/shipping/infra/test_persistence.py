@@ -6,6 +6,7 @@ from injector import Injector
 from retrying import retry
 
 from itca.event_sourcing import EventStore
+from itca.foundation.money import USD, Money
 from itca.shipping.domain.aggregates.order import AlreadyPaid, Order
 
 
@@ -65,6 +66,20 @@ def test_retrying_upon_concurrent_stream_write(event_store: EventStore) -> None:
         execute(uuid)
 
     assert len(append_to_stream_mock.mock_calls) == 2
+
+
+def test_loads_state_from_snapshot(event_store: EventStore) -> None:
+    uuid = uuid4()
+    order = Order.draft(uuid=uuid)
+    order.add_product(product_id=1, quantity=2, unit_price=Money(USD, "2.99"))
+    event_store.append_to_stream(order.changes)
+    snapshot = order.take_snapshot()
+    event_store.save_snapshot(snapshot)
+
+    stream = event_store.load_stream(uuid)
+
+    assert len(stream.events) == 1
+    assert isinstance(stream.events[0], type(snapshot))
 
 
 @pytest.fixture()
