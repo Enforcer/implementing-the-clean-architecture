@@ -25,3 +25,20 @@ class Event(Base):
     data = Column(JSONB(), nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False)
     version = Column(BigInteger(), nullable=False)
+
+
+class Snapshot(Base):
+    __tablename__ = "snapshots"
+    __table_args__ = (
+        Index(
+            "ix_snapshots_aggregate_version",
+            "aggregate_uuid",
+            "version",
+        ),
+    )
+    uuid = Column(GUID, primary_key=True)
+    aggregate_uuid = Column(GUID(), nullable=False)
+    name = Column(String(50), nullable=False)
+    data = Column(JSONB(), nullable=False)
+    created_at = Column(DateTime(timezone=True), nullable=False)
+    version = Column(BigInteger(), nullable=False)

@@ -42,6 +42,12 @@ class CannotChangeOrderLinesOfPaidOrder(Exception):
     pass
 
 
+@define(frozen=True)
+class OrderSnapshot(EsEvent):
+    paid_at: Optional[datetime]
+    lines: dict[ProductId, OrderLine]
+
+
 class Order:
     def __init__(self, stream: EventStream) -> None:
         self._uuid = stream.uuid
@@ -74,6 +80,9 @@ class Order:
                 )
 
             self._lines[event.product_id] = new_line
+        elif isinstance(event, OrderSnapshot):
+            self._paid_at = event.paid_at
+            self._lines = event.lines
         else:
             raise ValueError(f"Unknown event {type(event)}!")
 
@@ -103,6 +112,27 @@ class Order:
         self._apply(event)
         self._new_events.append(event)
 
+    def add_product(
+        self,
+        product_id: ProductId,
+        quantity: int,
+        unit_price: Money,
+    ) -> None:
+        if self._paid_at is not None:
+            raise CannotChangeOrderLinesOfPaidOrder
+
+        event = ProductAdded(
+            uuid=uuid4(),
+            aggregate_uuid=self._uuid,
+            created_at=datetime.now(tz=timezone.utc),
+            version=self._next_version,
+            product_id=product_id,
+            quantity=quantity,
+            unit_price=unit_price,
+        )
+        self._apply(event)
+        self._new_events.append(event)
+
     @property
     def _next_version(self) -> int:
         try:
@@ -117,6 +147,27 @@ class Order:
             aggregate_uuid=self._uuid,
             events=self._new_events[:],
             expected_version=self._version,
+        )
+
+    @property
+    def uuid(self) -> UUID:
+        return self._uuid
+
+    def take_snapshot(self) -> OrderSnapshot:
+        if self._new_events:
+            # For synchronous snapshot creation after saving latest changes
+            version = self._next_version
+        else:
+            # for asynchronous background snapshot creation
+            version = self._version
+
+        return OrderSnapshot(
+            uuid=uuid4(),
+            aggregate_uuid=self._uuid,
+            created_at=datetime.now(tz=timezone.utc),
+            version=version,
+            paid_at=self._paid_at,
+            lines=self._lines.copy(),
         )
 
 
