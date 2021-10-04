@@ -20,7 +20,7 @@ from itca.foundation.serde import converter
 @define
 class SqlAlchemyEventStore(EventStore):
     _session: Session
-    _projections_to_run_synchronously: list[SynchronousProjection]
+    _synchronous_projections: list[SynchronousProjection]
 
     def load_stream(self, aggregate_uuid: UUID) -> EventStream:
         events_stmt = (
@@ -90,7 +90,7 @@ class SqlAlchemyEventStore(EventStore):
 
         self._insert_events(changes)
 
-        for projection in self._projections_to_run_synchronously:
+        for projection in self._synchronous_projections:
             projection(changes.events)
 
     def _perform_update(self, changes: AggregateChanges) -> None:

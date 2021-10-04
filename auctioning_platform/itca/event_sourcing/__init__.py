@@ -20,9 +20,9 @@ class EventSourcing(injector.Module):
     def event_store(
         self,
         session: Session,
-        projections_to_run_synchronously: list[SynchronousProjection],
+        synchronous_projections: list[SynchronousProjection],
     ) -> EventStore:
         return SqlAlchemyEventStore(
             session=session,
-            projections_to_run_synchronously=projections_to_run_synchronously,
+            synchronous_projections=synchronous_projections,
         )
