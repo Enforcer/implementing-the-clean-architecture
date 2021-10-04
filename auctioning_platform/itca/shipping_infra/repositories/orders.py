@@ -20,3 +20,6 @@ class EventStoreOrdersRepository(OrdersRepository):
     def save(self, order: Order) -> None:
         changes = order.changes
         self._event_store.append_to_stream(changes)
+        if changes.expected_version % 100 == 0:
+            snapshot = order.take_snapshot()
+            self._event_store.save_snapshot(snapshot)
