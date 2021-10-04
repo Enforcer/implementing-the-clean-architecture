@@ -80,6 +80,15 @@ class Money:
         else:
             return self.amount < other.amount
 
+    def __mul__(self, other: Any) -> "Money":
+        assert isinstance(other, int)
+        return Money(self.currency, self.amount * other)
+
+    def __add__(self, other: Any) -> "Money":
+        assert isinstance(other, Money)
+        assert self.currency == other.currency
+        return Money(self.currency, self.amount + other.amount)
+
     def __repr__(self) -> str:
         return (
             f"<{self.__class__.__name__}"

@@ -4,10 +4,16 @@ from uuid import UUID, uuid4
 import pytest
 from injector import Injector
 from retrying import retry
+from sqlalchemy.orm import Session
 
 from itca.event_sourcing import EventStore
 from itca.foundation.money import USD, Money
+from itca.foundation.serde import converter
 from itca.shipping.domain.aggregates.order import AlreadyPaid, Order
+from itca.shipping_infra.projections.order_summary import (
+    OrderStatus,
+    OrderSummary,
+)
 
 
 def test_write_then_read(event_store: EventStore) -> None:
@@ -82,6 +88,29 @@ def test_loads_state_from_snapshot(event_store: EventStore) -> None:
     assert isinstance(stream.events[0], type(snapshot))
 
 
+def test_projects_order(event_store: EventStore, session: Session) -> None:
+    order = Order.draft(uuid=uuid4())
+    order.add_product(product_id=1, quantity=1, unit_price=Money(USD, "13.99"))
+    order.add_product(product_id=2, quantity=3, unit_price=Money(USD, "7.50"))
+    order.mark_as_paid()
+
+    event_store.append_to_stream(order.changes)
+
+    events = order.changes.events
+    summary: OrderSummary = session.query(OrderSummary).get(order.uuid)
+    assert summary.version == events[-1].version
+    assert summary.total_quantity == 4
+    assert converter.structure(summary.total_price, Money) == Money(
+        USD, "36.49"
+    )
+    assert summary.status == OrderStatus.PAID
+
+
 @pytest.fixture()
 def event_store(container: Injector) -> EventStore:
     return container.get(EventStore)  # type: ignore
+
+
+@pytest.fixture()
+def session(container: Injector) -> Session:
+    return container.get(Session)

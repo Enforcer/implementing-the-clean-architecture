@@ -13,12 +13,14 @@ from itca.event_sourcing.event_stream import EventStream
 from itca.event_sourcing.models import Aggregate as AggregateModel
 from itca.event_sourcing.models import Event as EventModel
 from itca.event_sourcing.models import Snapshot as SnapshotModel
+from itca.event_sourcing.projection import SynchronousProjection
 from itca.foundation.serde import converter
 
 
 @define
 class SqlAlchemyEventStore(EventStore):
     _session: Session
+    _projections_to_run_synchronously: list[SynchronousProjection]
 
     def load_stream(self, aggregate_uuid: UUID) -> EventStream:
         events_stmt = (
@@ -87,6 +89,9 @@ class SqlAlchemyEventStore(EventStore):
             self._perform_create(changes)
 
         self._insert_events(changes)
+
+        for projection in self._projections_to_run_synchronously:
+            projection(changes.events)
 
     def _perform_update(self, changes: AggregateChanges) -> None:
         last_event_version = changes.events[-1].version

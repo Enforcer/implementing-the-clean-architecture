@@ -12,6 +12,7 @@ from itca.event_sourcing import EventSourcing
 from itca.main.event_bus import EventBusModule
 from itca.payments import Payments
 from itca.processes import Processes
+from itca.shipping_infra import ShippingInfra
 
 
 def assemble(config_path: str = "config.ini") -> Injector:
@@ -25,6 +26,7 @@ def assemble(config_path: str = "config.ini") -> Injector:
             EventSourcing(),
             Auctions(),
             AuctionsInfra(),
+            ShippingInfra(),
             Payments(
                 username=config["bripe"]["username"],
                 password=config["bripe"]["password"],
