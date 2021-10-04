@@ -6,6 +6,7 @@ from freezegun import freeze_time
 
 from itca.event_sourcing.event_stream import EventStream
 from itca.foundation.money import USD, Money
+from itca.shipping.domain import events as domain_events
 from itca.shipping.domain.aggregates.order import (
     AlreadyPaid,
     Order,
@@ -58,6 +59,17 @@ def test_snapshot_remembers_changes(order: Order) -> None:
 
     with pytest.raises(AlreadyPaid):
         order_from_snapshot.mark_as_paid()
+
+
+def test_returns_domain_event_order_sent_upon_marking_as_sent(
+    order: Order,
+) -> None:
+    order.mark_as_paid()
+
+    returned_events = order.mark_as_sent()
+
+    assert len(returned_events) == 1
+    assert isinstance(returned_events[0], domain_events.ConsignmentShipped)
 
 
 @pytest.fixture()

@@ -7,7 +7,9 @@ from attr import define, evolve
 from itca.event_sourcing.aggregate_changes import AggregateChanges
 from itca.event_sourcing.event import EsEvent
 from itca.event_sourcing.event_stream import EventStream
+from itca.foundation.event import Event
 from itca.foundation.money import Money
+from itca.shipping.domain import events as domain_events
 from itca.shipping.domain.value_objects.product_id import ProductId
 
 
@@ -34,7 +36,20 @@ class OrderLine:
     unit_price: Money
 
 
+@define(frozen=True)
+class OrderSent(EsEvent):
+    pass
+
+
 class AlreadyPaid(Exception):
+    pass
+
+
+class NotPaidYet(Exception):
+    pass
+
+
+class AlreadySent(Exception):
     pass
 
 
@@ -55,6 +70,7 @@ class Order:
 
         self._paid_at: Optional[datetime] = None
         self._lines: dict[ProductId, OrderLine] = {}
+        self._sent_at: Optional[datetime] = None
 
         for event in stream.events:
             self._apply(event)
@@ -80,6 +96,8 @@ class Order:
                 )
 
             self._lines[event.product_id] = new_line
+        elif isinstance(event, OrderSent):
+            self._sent_at = event.created_at
         elif isinstance(event, OrderSnapshot):
             self._paid_at = event.paid_at
             self._lines = event.lines
@@ -111,6 +129,24 @@ class Order:
         )
         self._apply(event)
         self._new_events.append(event)
+
+    def mark_as_sent(self) -> list[Event]:
+        if self._paid_at is None:
+            raise NotPaidYet
+
+        if self._sent_at is not None:
+            raise AlreadySent
+
+        event = OrderSent(
+            uuid=uuid4(),
+            aggregate_uuid=self._uuid,
+            created_at=datetime.now(tz=timezone.utc),
+            version=self._next_version,
+        )
+        self._apply(event)
+        self._new_events.append(event)
+
+        return [domain_events.ConsignmentShipped(uuid=self.uuid)]
 
     def add_product(
         self,
