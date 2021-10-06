@@ -1,0 +1,15 @@
+@startuml
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia/puml-theme-materia.puml
+skinparam defaultFontSize 24
+
+actor Licytujący as bidder
+participant Frontend as frontend
+participant Backend as backend
+participant PaymentProvider as provider
+
+bidder -> frontend: podaje dane karty
+frontend -> provider: przesyła dane karty
+provider --> frontend: zwraca token
+frontend -> backend: przekazuje token do zapisania
+
+@enduml

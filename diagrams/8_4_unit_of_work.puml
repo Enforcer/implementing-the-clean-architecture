@@ -1,0 +1,27 @@
+@startuml
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia/puml-theme-materia.puml
+skinparam defaultFontSize 24
+
+participant Kontekst as context
+participant "Jednostka Pracy" as uow
+participant "Transakcja Bazy Danych" as db_tx
+queue "Kolejka Zadań" as q
+
+activate context
+
+context -> uow: begin()
+activate uow
+uow -> db_tx: begin()
+activate db_tx
+
+context -> uow: commit()
+uow -> db_tx: commit()
+deactivate db_tx
+
+uow -> uow: run_callbacks()
+uow -> q: send_email()
+deactivate uow
+
+deactivate context
+
+@enduml

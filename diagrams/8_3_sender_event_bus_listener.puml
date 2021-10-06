@@ -1,0 +1,17 @@
+@startuml
+!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia/puml-theme-materia.puml
+skinparam defaultFontSize 24
+
+actor Klient as client
+participant Nadawca as sender
+participant Zdarzenie as event
+participant "Szyna Zdarzeń" as event_bus
+participant Listener as listener
+
+listener -> event_bus: subscribe(event_type)
+client -> sender: do_something()
+sender --> event: << create >>
+sender -> event_bus: publish(event)
+event_bus -> listener: handle(event)
+
+@enduml
