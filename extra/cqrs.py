@@ -65,4 +65,6 @@ class Auctions(injector.Module):
 
 c = Injector([Auctions()])
 command_bus = CommandBus(c)
-command_bus.dispatch(PlaceBid(auction_id=1, bidder_id=1, amount=Money(USD, "1")))
+command_bus.dispatch(
+    PlaceBid(auction_id=1, bidder_id=1, amount=Money(USD, "1"))
+)

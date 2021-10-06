@@ -56,9 +56,9 @@ class GettingAuctionDetails:
 
     def execute(self, input_dto: GettingAuctionDetailsInputDto) -> None:
         auction = self._auctions_repo.get(input_dto.auction_id)  # 1
-        descriptor = self._auctions_descriptors_repo.get(  # 2
+        descriptor = self._auctions_descriptors_repo.get(
             input_dto.auction_id
-        )
+        )  # 2
         top_bids = auction.get_top_bids(count=3)  # 3
 
         top_bidders = []
