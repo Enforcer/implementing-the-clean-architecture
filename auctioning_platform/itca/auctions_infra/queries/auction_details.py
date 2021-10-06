@@ -17,7 +17,10 @@ class SqlAlchemyAuctionDetails(AuctionDetails):
     def query(self, auction_id: AuctionId) -> AuctionDetailsDto:
         auction_stmt = (
             select(Auction, AuctionDescriptor)
-            .join(AuctionDescriptor, AuctionDescriptor.id == Auction.id)
+            .join(
+                AuctionDescriptor,
+                AuctionDescriptor.id == Auction.id,  # type: ignore
+            )
             .filter(Auction.id == auction_id)
         )
         try:

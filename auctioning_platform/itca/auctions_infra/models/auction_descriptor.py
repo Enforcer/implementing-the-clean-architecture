@@ -1,11 +1,19 @@
-from sqlalchemy import BigInteger, Column, Integer, String
+from sqlalchemy import BigInteger, Column, Integer, String, Table
 
-from itca.db import Base
+from itca.db import Base, metadata
+
+auction_descriptors = Table(
+    "auctions_descriptors",
+    metadata,
+    Column(
+        "id",
+        BigInteger().with_variant(Integer, "sqlite"),
+        primary_key=True,
+    ),
+    Column("title", String(), nullable=False),
+    Column("description", String(), nullable=False),
+)
 
 
 class AuctionDescriptor(Base):
-    __tablename__ = "auctions_descriptors"
-
-    id = Column(BigInteger().with_variant(Integer, "sqlite"), primary_key=True)
-    title = Column(String(), nullable=False)
-    description = Column(String(), nullable=False)
+    __table__ = auction_descriptors

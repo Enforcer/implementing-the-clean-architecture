@@ -2,18 +2,21 @@ from datetime import datetime, timedelta
 from unittest.mock import Mock
 
 import pytest
-from attr import define
 from freezegun import freeze_time
 
 from itca.auctions import (
+    AuctionId,
+    AuctionsDescriptorsRepository,
     AuctionsRepository,
     BidderHasBeenOverbid,
     PlacingBid,
     PlacingBidInputDto,
     PlacingBidOutputBoundary,
     PlacingBidOutputDto,
+    StartingAuction,
+    StartingAuctionInputDto,
 )
-from itca.auctions.domain.entities.auction import Auction
+from itca.auctions.domain.entities.auction_descriptor import AuctionDescriptor
 from itca.auctions.domain.exceptions.bid_on_ended_auction import (
     BidOnEndedAuction,
 )
@@ -24,32 +27,23 @@ from tests.doubles.in_memory_auctions_repo import InMemoryAuctionsRepository
 AUCTION_ID = 1
 
 
-@define(frozen=True)
-class StartingAuctionInputDto:
-    stating_price: Money
-    end_time: datetime
-    title: str
-    description: str
+class AuctionsDescriptorsRepositoryFake(AuctionsDescriptorsRepository):
+    def get(self, auction_id: AuctionId) -> AuctionDescriptor:
+        raise NotImplementedError
 
+    def add(self, descriptor: AuctionDescriptor) -> None:
+        descriptor.id = AUCTION_ID
 
-@define
-class StartingAuction:
-    _auctions_repo: AuctionsRepository
-
-    def execute(self, dto: StartingAuctionInputDto) -> None:
-        self._auctions_repo.save(
-            Auction(
-                id=AUCTION_ID,
-                starting_price=dto.stating_price,
-                bids=[],
-                ends_at=dto.end_time,
-            )
-        )
+    def delete(self, descriptor: AuctionDescriptor) -> None:
+        raise NotImplementedError
 
 
 @pytest.fixture()
 def starting_auction(auctions_repo: AuctionsRepository) -> StartingAuction:
-    return StartingAuction(auctions_repo=auctions_repo)
+    return StartingAuction(
+        auctions_repo=auctions_repo,
+        auctions_descriptors_repo=AuctionsDescriptorsRepositoryFake(),
+    )
 
 
 def test_overbidding_emits_events_about_new_winner_and_overbid(
