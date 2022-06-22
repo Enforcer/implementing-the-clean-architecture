@@ -7,8 +7,8 @@ participant Frontend as frontend
 participant Backend as backend
 participant PaymentProvider as provider
 
-bidder -> frontend: "tak, chcę to kupić za 100 PLN!"
+bidder -> frontend: tak, chcę to kupić za 100 PLN!
 frontend -> backend
-backend -> provider: "obciąż token #123456 na 100 PLN"
+backend -> provider: obciąż token #123456 na 100 PLN
 
 @enduml

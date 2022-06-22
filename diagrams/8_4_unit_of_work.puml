@@ -3,9 +3,9 @@
 skinparam defaultFontSize 24
 
 participant Kontekst as context
-participant "Jednostka Pracy" as uow
-participant "Transakcja Bazy Danych" as db_tx
-queue "Kolejka Zadań" as q
+participant "Jednostka pracy" as uow
+participant "Transakcja bazy danych" as db_tx
+queue "Kolejka zadań" as q
 
 activate context
 

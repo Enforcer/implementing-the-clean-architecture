@@ -1,6 +1,7 @@
 @startuml
 !include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia/puml-theme-materia.puml
 skinparam defaultFontSize 24
+skinparam dpi 300
 
 actor Klient as client
 participant PlacingBidView as view

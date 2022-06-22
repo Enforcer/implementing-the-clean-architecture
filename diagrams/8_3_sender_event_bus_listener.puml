@@ -5,7 +5,7 @@ skinparam defaultFontSize 24
 actor Klient as client
 participant Nadawca as sender
 participant Zdarzenie as event
-participant "Szyna Zdarzeń" as event_bus
+participant "Szyna zdarzeń" as event_bus
 participant Listener as listener
 
 listener -> event_bus: subscribe(event_type)
