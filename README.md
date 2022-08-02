@@ -3,6 +3,7 @@ An example project for my book under the same title. [English version in digital
 
 This repository is meant to be a reference of many useful patterns when one implements projects using the Clean Architecture or Domain-Driven Design.
 
+## Discord server
 [![Join our Discord server!](https://invidget.switchblade.xyz/cDyDKv2VsY)](http://discord.gg/cDyDKv2VsY)
 
 # Table of contents
