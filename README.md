@@ -1,9 +1,13 @@
 # Implementing the Clean Architecture
-An example project for my book under the same title. [English version in digital format available on Leanpub](https://leanpub.com/implementing-the-clean-architecture), [polish version in print will be available soon](https://helion.magazyn.pl/Implementowanie-Czystej-Architektury-w-Pythonie/imczar/ksiazka.html)!
-
 This repository is meant to be a reference of many useful patterns when one implements projects using the Clean Architecture or Domain-Driven Design.
 
-## Discord server
+It also happens to be an example project for my book under the same title.
+
+EN [Implementing the Clean Architecture @ Leanpub](https://leanpub.com/implementing-the-clean-architecture)
+
+PL (also printed!) [Implementowanie Czystej Architektury w Pythonie](https://helion.pl/ksiazki/implementowanie-czystej-architektury-w-pythonie-sebastian-buczynski,imczar.htm#format/d)
+
+## Let's talk about it on Discord
 [![Join our Discord server!](https://invidget.switchblade.xyz/cDyDKv2VsY)](http://discord.gg/cDyDKv2VsY)
 
 # Table of contents
